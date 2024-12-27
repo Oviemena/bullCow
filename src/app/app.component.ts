@@ -112,7 +112,7 @@ export class AppComponent {
 
 
 
-    if (this.guessHistory().length > this.MAX_GUESSES) {
+    if (this.guessHistory().length >= this.MAX_GUESSES) {
       this.success.set("You lost!")
       this.gameState.set("lost")
     }

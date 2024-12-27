@@ -16,11 +16,11 @@
         type="text" maxlength="1" class="input input-bordered w-12 text-center"
         [ngClass]="{'input-error': errorMessage() !== '', 'cow': buttonClicked && showCow(guess(), i)}"
         (keyup.enter)="guessNumber()" (paste)="handlePaste($event)" />
-            <button class="btn btn-outline btn-accent" (click)="guessNumber()"
+      <button class="btn btn-outline btn-accent" (click)="guessNumber()"
         [disabled]="guessHistory().length >= MAX_GUESSES">Guess</button>
-          </div>
+    </div>
 
-          <!-- 'cow': showCow(guess(), i) && showCow(guess(), i) -->
+    <!-- 'cow': showCow(guess(), i) && showCow(guess(), i) -->
   </div>
   <div class="gap-3 ml-9 mt-8 text-end font-black text-sky-200 text-4xl flex-row justify-center items-center">
     {{guessHistory().length + "/" + MAX_GUESSES}}
@@ -37,7 +37,8 @@
       </dialog>
     </section>
     <div>
-      <ng-container *ngIf="guessHistory().length === 1 && (showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3))">
+      <ng-container
+        *ngIf="guessHistory().length === 1 && (showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3))">
         <button class="btn btn-sm" (click)="toggleShowCow()" [disabled]="buttonClicked">Show Cow</button>
       </ng-container>
     </div>
@@ -66,20 +67,30 @@
   </div>
   <div class="flex-row mt-2 justify-center items-center text-green-600">
     @if (gameState() === "won") {
-    <div class="flex items-center justify-center gap-1">
-      <mat-icon class="text-yellow-400">sentiment_satisfied</mat-icon>
-      {{success()}}
-    </div>
-    <button class="btn btn-outline btn-warning mt-2" (click)="resetGame()">Play Again</button>
+    <dialog id="win_modal" class="modal" open>
+      <div class="modal-box h-[40%] flex items-center justify-center gap-1">
+        <mat-icon class="text-yellow-400">sentiment_satisfied</mat-icon>
+        {{success()}}
+
+        <button class="btn btn-outline btn-warning mt-2" (click)="resetGame()">Play Again</button>
+
+      </div>
+
+    </dialog>
     }
   </div>
   <div class="flex-row mt-2 justify-center items-center text-red-600">
     @if (gameState() === 'lost') {
-    <div class="flex items-center justify-center gap-1">
-      <mat-icon>mood_bad</mat-icon>
-      {{success()}}
-    </div>
-    <button class="btn btn-outline btn-warning mt-2" (click)="resetGame()">Play Again</button>
+    <dialog id="win_modal" class="modal" open>
+      <div class="modal-box h-[40%] flex items-center justify-center gap-1">
+        <mat-icon>mood_bad</mat-icon>
+        {{success()}}
+
+        <button class="btn btn-outline btn-warning mt-2" (click)="resetGame()">Play Again</button>
+
+      </div>
+
+    </dialog>
     }
   </div>
 </main>
