@@ -85,6 +85,7 @@ export class AppComponent {
       this.errorMessage.set("Please enter a 4 digit number")
       return
     }
+
     if (this.guess()[0] === 0) {
       this.errorMessage.set("The first number must not start with 0")
       return

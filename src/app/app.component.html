@@ -20,7 +20,6 @@
         [disabled]="guessHistory().length >= MAX_GUESSES">Guess</button>
     </div>
 
-    <!-- 'cow': showCow(guess(), i) && showCow(guess(), i) -->
   </div>
   <div class="gap-3 ml-9 mt-8 text-end font-black text-sky-200 text-4xl flex-row justify-center items-center">
     {{guessHistory().length + "/" + MAX_GUESSES}}
@@ -38,7 +37,7 @@
     </section>
     <div>
       <ng-container
-        *ngIf="guessHistory().length === 1 && (showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3))">
+        *ngIf="guessHistory().length > 0 && (showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3))">
         <button class="btn btn-sm" (click)="toggleShowCow()" [disabled]="buttonClicked">Show Cow</button>
       </ng-container>
     </div>
