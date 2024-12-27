@@ -14,11 +14,13 @@
     <div class="flex gap-2">
       <input *ngFor="let digit of [0, 1, 2, 3]; let i = index" [(ngModel)]="guess()[i]" (input)="trackInput($event, i)"
         type="text" maxlength="1" class="input input-bordered w-12 text-center"
-        [ngClass]="{'input-error': errorMessage() !== '', 'cow': showCow(guess(), i) && showCow(guess(), i)}"
+        [ngClass]="{'input-error': errorMessage() !== '', 'cow': buttonClicked && showCow(guess(), i)}"
         (keyup.enter)="guessNumber()" (paste)="handlePaste($event)" />
             <button class="btn btn-outline btn-accent" (click)="guessNumber()"
         [disabled]="guessHistory().length >= MAX_GUESSES">Guess</button>
           </div>
+
+          <!-- 'cow': showCow(guess(), i) && showCow(guess(), i) -->
   </div>
   <div class="gap-3 ml-9 mt-8 text-end font-black text-sky-200 text-4xl flex-row justify-center items-center">
     {{guessHistory().length + "/" + MAX_GUESSES}}
@@ -35,8 +37,8 @@
       </dialog>
     </section>
     <div>
-      <ng-container *ngIf="showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3)">
-        <button class="btn btn-sm" (click)="showCow(guess(), 0)">Show Cow</button>
+      <ng-container *ngIf="guessHistory().length === 1 && (showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3))">
+        <button class="btn btn-sm" (click)="toggleShowCow()" [disabled]="buttonClicked">Show Cow</button>
       </ng-container>
     </div>
   </div>

@@ -27,6 +27,8 @@ export class AppComponent {
   success = signal("")
   gameState = signal("init")
   MAX_GUESSES = 10
+  showCowIndicator = false;
+  buttonClicked = false;
 
 
   constructor() {
@@ -115,6 +117,8 @@ export class AppComponent {
       this.gameState.set("lost")
     }
 
+    this.buttonClicked = false;
+
 
   }
 
@@ -166,8 +170,15 @@ export class AppComponent {
     guess: number[],
     index: number
   ) {
-    const answer = this.answer()
-    return answer.includes(guess[index]) && guess[index] !== answer[index]
+    const currentGuess = this.guessHistory().find(h => h.g === +guess.join(''));
+    if (!currentGuess) return false;
+    const answer = this.answer();
+    return answer.includes(guess[index]) && guess[index] !== answer[index];
+  }
+
+  toggleShowCow() {
+    this.showCowIndicator = true;
+    this.buttonClicked = true;
   }
 
 
