@@ -1,31 +1,26 @@
 <h1 class="text-4xl font-bold text-center text-accent">Bulls & Cows</h1>
 <div class="mb-4 flex justify-center">
-
   <p>To see the rules of Bulls and Cows, refer to this <a href="https://en.wikipedia.org/wiki/Bulls_and_cows"
       target="_blank" rel="noopener noreferrer" class="link">link</a></p>
 </div>
 <div class="flex justify-center">
   <p>Guess the 4 digit number. The number should not have any repeating digits.</p>
-
 </div>
 <div class=" mb-4 flex justify-center">
   <p>After each guess, the number of bulls and cows will be displayed.</p>
 </div>
 <div class="flex justify-center items-center">
-
   <div class="flex">
     <div class="flex gap-2">
       <input *ngFor="let digit of [0, 1, 2, 3]; let i = index" [(ngModel)]="guess()[i]" (input)="trackInput($event, i)"
         type="text" maxlength="1" class="input input-bordered w-12 text-center"
-        [ngClass]="{'input-error': errorMessage() !== ''}" (keyup.enter)="guessNumber()"
-        (paste)="handlePaste($event)" />
-
-      <button class="btn btn-outline btn-accent" (click)="guessNumber()"
+        [ngClass]="{'input-error': errorMessage() !== '', 'cow': showCow(guess(), i) && showCow(guess(), i)}"
+        (keyup.enter)="guessNumber()" (paste)="handlePaste($event)" />
+            <button class="btn btn-outline btn-accent" (click)="guessNumber()"
         [disabled]="guessHistory().length >= MAX_GUESSES">Guess</button>
-    </div>
-
+          </div>
   </div>
-  <div class=" gap-3 ml-9 mt-8 text-end font-black text-sky-200 text-4xl flex-row justify-center items-center">
+  <div class="gap-3 ml-9 mt-8 text-end font-black text-sky-200 text-4xl flex-row justify-center items-center">
     {{guessHistory().length + "/" + MAX_GUESSES}}
     <section>
       <!-- Open the modal using ID.showModal() method -->
@@ -39,20 +34,23 @@
         </form>
       </dialog>
     </section>
+    <div>
+      <ng-container *ngIf="showCow(guess(), 0) || showCow(guess(), 1) || showCow(guess(), 2) || showCow(guess(), 3)">
+        <button class="btn btn-sm" (click)="showCow(guess(), 0)">Show Cow</button>
+      </ng-container>
+    </div>
   </div>
-
 </div>
-<div class="flex  justify-center items-center text-red-600 mt-2 gap-1">
-  @if(errorMessage() !== ''){
+<div class="flex justify-center items-center text-red-600 mt-2 gap-1">
+  @if(errorMessage() !== '') {
   <mat-icon>error_outline</mat-icon>
-  {{errorMessage()}}}
+  {{errorMessage()}}
+  }
 </div>
-
 <main class="flex flex-col items-center mt-4">
-
   <div>
     @for(guess of guessHistory(); track $index) {
-    <div class="flex justify-between items-cente gap-4">
+    <div class="flex justify-between items-center gap-4">
       <p>
         <ng-container *ngFor="let digit of guess.g.toString().split(''); let i = index">
           <span [style.color]="getBullColor(guess.g.toString(), i)">
@@ -63,19 +61,17 @@
       <p class="mr-2"> {{guess.bulls}} Bulls, {{guess.cows}} Cows</p>
     </div>
     }
-
   </div>
   <div class="flex-row mt-2 justify-center items-center text-green-600">
     @if (gameState() === "won") {
     <div class="flex items-center justify-center gap-1">
-      <mat-icon class="text-yellow-400">mood</mat-icon>
+      <mat-icon class="text-yellow-400">sentiment_satisfied</mat-icon>
       {{success()}}
     </div>
     <button class="btn btn-outline btn-warning mt-2" (click)="resetGame()">Play Again</button>
     }
   </div>
   <div class="flex-row mt-2 justify-center items-center text-red-600">
-
     @if (gameState() === 'lost') {
     <div class="flex items-center justify-center gap-1">
       <mat-icon>mood_bad</mat-icon>

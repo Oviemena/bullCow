@@ -1,3 +1,7 @@
 .input-error {
     border-color: red;
   }
+
+  .cow {
+    background-color: yellow; /* or any color you prefer */
+  }

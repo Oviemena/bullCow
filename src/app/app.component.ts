@@ -89,7 +89,6 @@ export class AppComponent {
     }
 
 
-    const guess = this.guess().join('')
     if (new Set(this.guess()).size !== DIGITS) {
       this.errorMessage.set("Please enter a number with unique digits")
       return
@@ -162,4 +161,14 @@ export class AppComponent {
       this.errorMessage.set('Please paste a 4-digit number without repeating digits.');
     }
   }
+
+  showCow(
+    guess: number[],
+    index: number
+  ) {
+    const answer = this.answer()
+    return answer.includes(guess[index]) && guess[index] !== answer[index]
+  }
+
+
 }
